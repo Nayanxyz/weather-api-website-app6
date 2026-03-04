@@ -15,5 +15,5 @@ def about(station, date):
             "date": date,
             "temperature": temperature}
 
-if __name__== "__main__":                                                  #so that we can run main.py here only
+if __name__== "__main__":                                                  #so that we can run main.py here only.
     app.run(debug=True)
