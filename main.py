@@ -16,4 +16,5 @@ def about(station, date):
             "temperature": temperature}
 
 if __name__== "__main__":                                                  #so that we can run main.py here only.
-    app.run(debug=True)
+    app.run(debug=True)                                                   #we can run apps on  different port so that apps can run simultaneously, perfectly
+                                                                          #app.run(debug=True , port=5001)
