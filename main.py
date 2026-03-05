@@ -23,5 +23,26 @@ def about(station, date):
     return {"station": station,
             "temperature": temperature}
 
-if __name__== "__main__":                                                  #we now have our working api
+@app.route("/api/v1/<station>")
+def one_station(station):
+    filename = "data_small/TG_STAID" + str(station).zfill(6) + ".txt"
+    df = pd.read_csv(filename, skiprows=20, parse_dates=['    DATE'])                    #dates here and above are all in integer format
+    result = df.to_dict(orient="records")                                    #to_dict method used for converting data into dictionary
+    return result                                                            # and change data format to records
+
+
+
+@app.route("/api/v1/yearly/<station>/<year>")
+def yearly(station, year):
+    filename = "data_small/TG_STAID" + str(station).zfill(6) + ".txt"
+    df = pd.read_csv(filename, skiprows=20)
+    df['    DATE'] = df['    DATE'].astype(str)                                         #changed dates to string
+    result = df[df['    DATE'].str.startswith(str(year))].to_dict(orient="records")     #<year> is just empty and replaced by value
+    return result                                                                       #df['DATE'].str here .str is a bridge , it tells pandas
+                                                                                        # "Look at every single item in this column and
+                                                                                        # treat it as a string so I can use string methods on it."
+                                                                                        #str.startswith method used to ensure the year date starts with year and as string
+
+
+if __name__== "__main__":                                                  #we now have our working Rest api
     app.run(debug=True)
